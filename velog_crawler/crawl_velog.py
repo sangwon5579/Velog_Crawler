@@ -1,10 +1,4 @@
-# crawl_velog.py — Velog 전체 글 수집 (프로필 무한스크롤 + 본문 렌더링)
-# 사용법:
-#   1) pip install playwright && playwright install chromium
-#   2) python crawl_velog.py
-#
-# 출력: out.json (모든 글의 url/title/tags/published/text/code_langs 등)
-
+# 벨로그 크롤링
 import json, time, re, hashlib
 from urllib.parse import urljoin
 from typing import List, Set, Tuple, Optional
