@@ -7,7 +7,7 @@ from playwright.sync_api import sync_playwright, TimeoutError as PWTimeout
 
 UA = "SpecGuardBot/1.0 (+https://example.com)"
 
-# ===== 리스트(프로필) 스크롤 수집 =====
+# 리스트(프로필) 스크롤 수집 
 def render_list_with_playwright(
     handle: str,
     max_scrolls: int = 200,
@@ -26,7 +26,7 @@ def render_list_with_playwright(
         ctx = p.chromium.connect_over_cdp if False else None  # placeholder to avoid linter
         ctx = browser.new_context(user_agent=UA, viewport={"width": 1280, "height": 900})
 
-        # 이미지/폰트 차단(속도↑)
+        # 이미지/폰트 차단
         try:
             ctx.route(
                 "**/*",
@@ -73,7 +73,7 @@ def render_list_with_playwright(
             else:
                 stagnant = 0
             last_count = len(hrefs)
-            if stagnant >= 3:  # 3번 연속 증가 없음 → 종료
+            if stagnant >= 3:  # 3번 연속 증가 없음 -> 종료
                 break
 
             page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
@@ -88,7 +88,7 @@ def render_list_with_playwright(
     hrefs = {h for h in hrefs if f"/@{handle}/" in h}
     return sorted(hrefs)
 
-# ===== 글 상세 렌더링 & 파싱 =====
+# 글 상세 렌더링 & 파싱
 def render_post_with_playwright(
     url: str,
     timeout_ms: int = 20000,
@@ -199,7 +199,7 @@ def render_post_with_playwright(
         browser.close()
         return title, text, sorted(set(code_langs)), tags, published
 
-# ===== 전체 파이프라인 =====
+# 전체 파이프라인
 def crawl_all_posts(
     handle: str,
     max_scrolls: int = 200,
@@ -218,7 +218,7 @@ def crawl_all_posts(
         try:
             title, text, code_langs, tags, published = render_post_with_playwright(url)
 
-            # 상단 boilerplate 제거(간단)
+            # 상단 boilerplate 제거
             if text:
                 text = re.sub(r"(로그인|팔로우|목록 보기)\s*", " ", text)
                 text = re.sub(r"\s{2,}", " ", text).strip()
@@ -254,10 +254,10 @@ def crawl_all_posts(
     }
 
 if __name__ == "__main__":
-    # ▶ 이 값만 바꾸면 됩니다 (@ 없이)
+    # 여기에 아이디 입력
     HANDLE = "sangwon5579"
 
-    # ▶ 스크롤/대기 설정 (글이 많을수록 scroll을 늘려주세요)
+    # 스크롤/대기 설정 (글이 많을수록 scroll을 늘려주세요)
     MAX_SCROLLS = 220
     PAUSE_SEC = 1.0
     PER_POST_DELAY = 1.0
