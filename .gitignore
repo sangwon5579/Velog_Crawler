@@ -52,3 +52,5 @@ sample_velog_payload.json
 # Playwright Browser Cache
 # ------------------------
 playwright/.cache/
+
+#크롤링 결과 파일이랑 venv 안올라가게 했습니다
