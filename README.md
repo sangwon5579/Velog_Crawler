@@ -21,6 +21,8 @@ pip install tzdata
 ```
 
 ## 사용 방법
+- 가상환경 사용   
+visualstudio code에서 Ctrl+Shift+P -> Python: Select Interpreter 에서 .venv 경로 선택  
 
 - velog 크롤링
 
