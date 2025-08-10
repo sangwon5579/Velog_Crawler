@@ -254,15 +254,44 @@ def crawl_all_posts(
     }
 
 if __name__ == "__main__":
-    # 여기에 아이디 입력
-    HANDLE = "sangwon5579"
+    import argparse, os, json
 
-    # 스크롤/대기 설정 (글이 많을수록 scroll을 늘려주세요)
-    MAX_SCROLLS = 220
-    PAUSE_SEC = 1.0
-    PER_POST_DELAY = 1.0
+    parser = argparse.ArgumentParser(description="Velog full crawler")
+    parser.add_argument("--handle", required=True, help="Velog handle (without @)")
+    parser.add_argument("--max-scrolls", type=int, default=220)
+    parser.add_argument("--pause", type=float, default=1.0)
+    parser.add_argument("--per-post-delay", type=float, default=1.0)
+    parser.add_argument("--out", default="out.json", help="output json path")
+    parser.add_argument("--resume", action="store_true", help="skip already-scraped URLs from existing out.json")
+    args = parser.parse_args()
 
-    data = crawl_all_posts(HANDLE, max_scrolls=MAX_SCROLLS, pause_sec=PAUSE_SEC, per_post_delay=PER_POST_DELAY)
-    with open("out.json", "w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False, indent=2)
-    print(f"[DONE] 총 {len(data['posts'])}개 포스트 저장 → out.json")
+    # 기존 out.json 로드(증분)
+    existing = {"source":"velog","author":{"handle": args.handle},"posts": [], "schema_version":1}
+    seen = set()
+    if args.resume and os.path.exists(args.out):
+        with open(args.out, encoding="utf-8") as f:
+            try:
+                prev = json.load(f)
+                if prev.get("author",{}).get("handle") == args.handle:
+                    existing = prev
+                    seen = {p["url"] for p in prev.get("posts", [])}
+            except Exception:
+                pass
+
+    data = crawl_all_posts(
+        args.handle, max_scrolls=args.max_scrolls, pause_sec=args.pause, per_post_delay=args.per_post_delay
+    )
+
+    # 증분 병합 & 중복 제거
+    merged = existing.get("posts", []) + [p for p in data["posts"] if p["url"] not in seen]
+    # URL 기준 중복 제거(혹시 두 번 들어온 경우)
+    dedup = {}
+    for p in merged:
+        dedup[p["url"]] = p
+    posts = list(dedup.values())
+
+    out = {"source":"velog","author":{"handle": args.handle}, "posts": posts, "schema_version":1}
+    with open(args.out, "w", encoding="utf-8") as f:
+        json.dump(out, f, ensure_ascii=False, indent=2)
+    print(f"[DONE] 총 {len(posts)}개 포스트 저장 → {args.out}")
+
