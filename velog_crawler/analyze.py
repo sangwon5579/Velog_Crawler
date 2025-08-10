@@ -19,7 +19,7 @@ STACK_RULES = {
 KST = ZoneInfo("Asia/Seoul")
 
 def parse_korean_datetime(s: str, now: datetime) -> datetime | None:
-    """한국어 날짜/상대시간 문자열을 UTC datetime으로 변환"""
+    # 한국어 날짜/상대시간 문자열을 UTC datetime으로 변환
     if not s: 
         return None
     text = s.strip()

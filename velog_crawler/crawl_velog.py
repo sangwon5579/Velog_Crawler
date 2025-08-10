@@ -14,9 +14,9 @@ def render_list_with_playwright(
     pause_sec: float = 1.0,
     timeout_ms: int = 25000,
 ) -> List[str]:
-    """
-    프로필 페이지를 열고 아래로 여러 번 스크롤하면서 해당 유저의 모든 글 링크를 수집.
-    """
+
+# 프로필 페이지를 열고 아래로 여러 번 스크롤하면서 해당 유저의 모든 글 링크를 수집.
+
     base = f"https://velog.io/@{handle}"
     hrefs: Set[str] = set()
 
@@ -159,7 +159,7 @@ def render_post_with_playwright(
         except Exception:
             pass
 
-        # 본문: article → main → #root → body
+        # 본문: article -> main -> #root -> body
         text = ""
         try:
             if page.locator("article").count() > 0:
@@ -185,7 +185,7 @@ def render_post_with_playwright(
             except Exception:
                 pass
 
-        # 게시 시각(형태 다양 → 그대로 저장; 분석 시 표준화 권장)
+        # 게시 시각(형태 다양 -> 그대로 저장)
         published = None
         try:
             for s in page.locator("time, span, div").all_inner_texts():
@@ -206,10 +206,10 @@ def crawl_all_posts(
     pause_sec: float = 1.0,
     per_post_delay: float = 1.0,
 ) -> dict:
-    """
-    1) 프로필 전체 스크롤 → 모든 포스트 링크 수집
-    2) 각 포스트 렌더 → 메타데이터/본문 추출
-    """
+ 
+    # 1) 프로필 전체 스크롤 -> 모든 포스트 링크 수집
+    # 2) 각 포스트 렌더 -> 메타데이터/본문 추출
+
     links = render_list_with_playwright(handle, max_scrolls=max_scrolls, pause_sec=pause_sec)
     print(f"[INFO] 링크 수집 완료: {len(links)}개")
 
