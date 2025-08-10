@@ -1,0 +1,29 @@
+{
+  "author": {
+    "handle": "sangwon5579"
+  },
+  "active_start": "2025-08-04",
+  "active_end": "2025-08-09",
+  "active_days": 6,
+  "total_posts": 28,
+  "total_study_posts": 28,
+  "posts_per_month": {
+    "2025-08": 28
+  },
+  "longest_streak_days": 2,
+  "max_gap_days": 2,
+  "interval_cv": 3.742,
+  "last_90d_posts": 28,
+  "last_90d_weeks_active": 1,
+  "cadence_score": 12.8,
+  "top_topics": [
+    [
+      "Java/JSP/Servlet",
+      26
+    ],
+    [
+      "Web/FE",
+      2
+    ]
+  ]
+}

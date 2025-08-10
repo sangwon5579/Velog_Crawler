@@ -1,0 +1,54 @@
+# ------------------------
+# Python & Virtual Env
+# ------------------------
+.venv/
+env/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pdb
+*.egg
+*.egg-info/
+.eggs/
+
+# ------------------------
+# Environment / Secrets
+# ------------------------
+.env
+*.env
+config.json
+secrets.json
+
+# ------------------------
+# OS / Editor
+# ------------------------
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ------------------------
+# Logs & Temp Files
+# ------------------------
+*.log
+*.tmp
+*.bak
+
+# ------------------------
+# Crawl & Analysis Outputs
+# ------------------------
+out.json
+analyzed.json
+sample_velog_payload.json
+*.csv
+*.tsv
+*.txt
+
+# ------------------------
+# Playwright Browser Cache
+# ------------------------
+playwright/.cache/
