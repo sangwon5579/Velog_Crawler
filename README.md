@@ -25,7 +25,7 @@ pip install tzdata
 - velog 크롤링
 
 ```scss
-python crawl_velog.py
+python crawl_velog.py --handle 벨로그아이디
 ```
 
 실행 하면 out.json 파일 생성
