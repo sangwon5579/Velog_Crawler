@@ -23,7 +23,7 @@ def render_list_with_playwright(
     with sync_playwright() as p:
         # 디버깅 시 headless=False, slow_mo=200 으로 바꿔 화면 보면서 확인 가능
         browser = p.chromium.launch(headless=True)
-        ctx = p.chromium.connect_over_cdp if False else None  # placeholder to avoid linter
+        
         ctx = browser.new_context(user_agent=UA, viewport={"width": 1280, "height": 900})
 
         # 이미지/폰트 차단
@@ -93,11 +93,11 @@ def render_post_with_playwright(
     url: str,
     timeout_ms: int = 20000,
 ) -> Tuple[str, str, List[str], List[str], Optional[str]]:
-    """
-    글 페이지를 렌더링해서 제목/본문/태그/코드 언어/게시 시각(가능하면) 추출.
-    - visible 대기 없이 짧게 시도 → 폴백 셀렉터 → 1회 스크롤 재시도
-    - 전체 per-post 워치독 느낌의 제한으로 무한대기 방지
-    """
+   
+    # 글 페이지를 렌더링해서 제목/본문/태그/코드 언어/게시 시각(가능하면) 추출.
+    # - visible 대기 없이 짧게 시도 -> 폴백 셀렉터 -> 1회 스크롤 재시도
+    # - 전체 per-post 워치독 느낌의 제한으로 무한대기 방지
+   
     start = time.perf_counter()
     HARD_LIMIT = max(8, timeout_ms / 1000 + 4)  # 포스트당 최대 N초
 
